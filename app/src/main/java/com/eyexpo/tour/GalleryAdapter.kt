@@ -1,7 +1,6 @@
 package com.eyexpo.tour
 
 import android.content.Context
-import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -20,11 +19,6 @@ internal class GalleryAdapter(private val context: Context, private var galleryL
 
     override fun onBindViewHolder(viewHolder: GalleryViewHolder, i: Int) {
         viewHolder.data = galleryList[i]
-        viewHolder.setOnClickPanoramaListener {
-            val intent = Intent(context, ViewerActivity::class.java)
-            intent.putExtra("URL", galleryList[i].url)
-            context.startActivity(intent)
-        }
     }
 
     override fun getItemCount(): Int {

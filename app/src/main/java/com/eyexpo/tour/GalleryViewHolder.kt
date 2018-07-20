@@ -1,6 +1,7 @@
 package com.eyexpo.tour
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
 import android.support.v7.widget.RecyclerView
@@ -14,30 +15,36 @@ import com.google.vr.sdk.widgets.pano.VrPanoramaView
  * Created by Ashton Chen on 2018-07-18.
  */
 
-class GalleryViewHolder(view: View, private val context: Context) : RecyclerView.ViewHolder(view) {
-    private val panoramaView: VrPanoramaView = view.findViewById(R.id.panorama)
-    private val titleView: TextView = view.findViewById(R.id.title)
+class GalleryViewHolder : RecyclerView.ViewHolder {
+    private val context: Context
+    private val panoramaView: VrPanoramaView
+    private val titleView: TextView
+    private val viewOptions = VrPanoramaView.Options()
+    private var url: String? = null
 
-    var onClickPanoramaCallback: (Uri) -> Unit = {}
+    constructor(view: View, _context: Context) : super(view) {
+        context = _context
+        panoramaView = view.findViewById(R.id.panorama)
+        titleView = view.findViewById(R.id.title)
+        viewOptions.inputType = VrPanoramaView.Options.TYPE_MONO
+        panoramaView.setInfoButtonEnabled(false)
+        panoramaView.setFullscreenButtonEnabled(false)
+        panoramaView.setStereoModeButtonEnabled(false)
+        panoramaView.setEventListener(object : VrPanoramaEventListener() {
+            override fun onClick() {
+                val intent = Intent(context, ViewerActivity::class.java)
+                intent.putExtra("URL", url)
+                context.startActivity(intent)
+            }
+        })
+    }
+
     var data: TourModel? = null
         set(value) {
             titleView.text = value!!.title
             val imageUri = Uri.parse(value!!.thumbnailURI)
             val bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver, imageUri)
-            val viewOptions = VrPanoramaView.Options()
-            viewOptions.inputType = VrPanoramaView.Options.TYPE_MONO
             panoramaView.loadImageFromBitmap(bitmap, viewOptions)
-            panoramaView.setInfoButtonEnabled(false)
-            panoramaView.setFullscreenButtonEnabled(false)
-            panoramaView.setStereoModeButtonEnabled(false)
-            panoramaView.setEventListener(object : VrPanoramaEventListener() {
-                override fun onClick() {
-                    onClickPanoramaCallback(Uri.parse(value.url))
-                }
-            })
+            url = value.url
         }
-
-    fun setOnClickPanoramaListener(callback: (Uri) -> Unit) {
-        onClickPanoramaCallback = callback
-    }
 }

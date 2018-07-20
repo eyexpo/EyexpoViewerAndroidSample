@@ -17,16 +17,17 @@ class ImageDownloadTask(private val url: String, private val callback: (Bitmap?)
         AsyncTask<URL, Int, Bitmap>() {
 
     override fun doInBackground(vararg urls: URL): Bitmap? {
+        var bitmap: Bitmap? = null
         try {
             val connection = URL(url).openConnection() as HttpURLConnection
             connection.doInput = true
             connection.connect()
             val input = connection.inputStream
-            return BitmapFactory.decodeStream(input)
+            bitmap = BitmapFactory.decodeStream(input)
         } catch (e: IOException) {
             e.printStackTrace()
-            return null
         }
+        return bitmap
     }
 
     override fun onPostExecute(result: Bitmap?) {
