@@ -50,14 +50,19 @@ class GalleryActivity : AppCompatActivity() {
                 val jsonObject = jsonList.getJSONObject(i)
                 val fileName = jsonObject.getString("vr_config")
                 val url = jsonObject.getString("public_url")
-                val thumbnailURL = jsonObject.getString("cover_img_thumbnail")
+                val thumbnailURL = jsonObject.getString("cover_img_preview1")
                 val title = jsonObject.getString("name")
 
-                val tour = TourModel(fileName, title, url, thumbnailURL)
+                val tour = TourModel()
+                tour.fileName = fileName
+                tour.title = title
+                tour.url = url
+
+                tour.thumbnailURL = thumbnailURL
 
                 val onImageDownloadCallback: (bitmap: Bitmap?) -> Unit = {
                     if (it != null) {
-                        val uri = writeToFile("gallery", tour.fileName, it)
+                        val uri = writeToFile("gallery", tour.fileName!!, it)
                         tour.thumbnailURI = uri.toString()
                     }
 
@@ -72,7 +77,7 @@ class GalleryActivity : AppCompatActivity() {
                         recyclerView.adapter = GalleryAdapter(this, tourList)
                     }
                 }
-                ImageDownloadTask(tour.thumbnailURL, onImageDownloadCallback).execute()
+                ImageDownloadTask(tour.thumbnailURL!!, onImageDownloadCallback).execute()
             }
         }
 
