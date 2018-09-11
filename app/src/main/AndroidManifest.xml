@@ -30,7 +30,7 @@
 
         <activity
             android:name=".ViewerActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
     </application>
 
 </manifest>

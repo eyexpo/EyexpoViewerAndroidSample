@@ -6,8 +6,6 @@
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/colorPrimary</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
-        <!--<item name="android:windowLightStatusBar">true</item>-->
-        <!--<item name="android:statusBarColor">@color/colorBackground</item>-->
     </style>
 
     <style name="dividerBase">
@@ -17,5 +15,12 @@
     <style name="dividerHorizontal" parent="dividerBase">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
+    </style>
+
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 </resources>

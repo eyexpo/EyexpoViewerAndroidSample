@@ -21,7 +21,6 @@ class ViewerActivity : AppCompatActivity() {
         webView.webViewClient = WebViewClient()
         webView.webChromeClient = WebChromeClient()
         webView.settings.javaScriptEnabled = true
-        web_view_info.text = webView.settings.userAgentString
         val url = intent.getStringExtra("URL")
         webView.loadUrl(url)
     }
