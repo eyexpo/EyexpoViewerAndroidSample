@@ -22,17 +22,6 @@
             android:textAlignment="center"
             android:textSize="25sp" />
 
-        <TextView
-            android:id="@+id/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_margin="5dp"
-            android:gravity="end"
-            android:text="@string/logout"
-            android:textAlignment="center"
-            android:textSize="15dp" />
-
     </android.support.v7.widget.Toolbar>
 
     <Space
@@ -42,9 +31,9 @@
         android:foregroundGravity="left" />
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/gallery_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/gallery_container">
+        android:layout_height="match_parent">
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"

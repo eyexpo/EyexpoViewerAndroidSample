@@ -1,15 +1,16 @@
 package com.eyexpo.tour
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.res.AssetManager
+import android.graphics.BitmapFactory
 import android.net.Uri
-import android.provider.MediaStore
+import android.support.v4.content.ContextCompat.startActivity
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
-import com.google.vr.sdk.widgets.pano.VrPanoramaEventListener
-import com.google.vr.sdk.widgets.pano.VrPanoramaView
+import com.eyexpo.vr.PanoramaWidget
 
 
 /**
@@ -17,42 +18,49 @@ import com.google.vr.sdk.widgets.pano.VrPanoramaView
  */
 
 class GalleryViewHolder : RecyclerView.ViewHolder {
-    private val context: Context
-    private val container: LinearLayout
-    private val panoramaView: VrPanoramaView
-    private val titleView: TextView
-    private val viewOptions = VrPanoramaView.Options()
-    private var url: String? = null
+    private val mContext: Context
+    private val mPanoramaWidget: PanoramaWidget
 
+    @SuppressLint("ClickableViewAccessibility")
     constructor(view: View, _context: Context, width: Int, height: Int) : super(view) {
-        context = _context
-        container = view.findViewById(R.id.container)
-        panoramaView = view.findViewById(R.id.panorama)
-        titleView = view.findViewById(R.id.title)
-        viewOptions.inputType = VrPanoramaView.Options.TYPE_MONO
-        panoramaView.setInfoButtonEnabled(false)
-        panoramaView.setFullscreenButtonEnabled(false)
-        panoramaView.setStereoModeButtonEnabled(false)
-        panoramaView.setEventListener(object : VrPanoramaEventListener() {
-            override fun onClick() {
-                val intent = Intent(context, ViewerActivity::class.java)
-                intent.putExtra("URL", url)
-                context.startActivity(intent)
-            }
-        })
+        mContext = _context
+        val cardView = view.findViewById(R.id.card_view) as CardView
+        mPanoramaWidget = view.findViewById(R.id.panoWidget)
+        mPanoramaWidget.width = height / 2
+        mPanoramaWidget.height = height / 2
 
-        container.getLayoutParams().width = width
-        container.getLayoutParams().height = height
+        mPanoramaWidget.setOnClickListener {
+            onClick()
+        }
+
+        cardView.setOnClickListener {
+            onClick()
+        }
     }
 
-    var data: TourModel? = null
+    var data: String? = null
         set(value) {
-            titleView.text = value!!.title
-            if (value!!.thumbnailURI != null) {
-                val imageUri = Uri.parse(value!!.thumbnailURI)
-                val bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver, imageUri)
-                panoramaView.loadImageFromBitmap(bitmap, viewOptions)
-            }
-            url = value.url
+            field = value
+            val inputStream = mContext.assets.open(value, AssetManager.ACCESS_BUFFER)
+            val bitmap = BitmapFactory.decodeStream(inputStream)
+            mPanoramaWidget.setImageBitmap(bitmap)
         }
+
+    private fun onClick() {
+        val intent = Intent(mContext, DetailActivity::class.java)
+        intent.data = Uri.parse(data)
+        startActivity(mContext, intent, null)
+    }
+
+    fun onResume() {
+        mPanoramaWidget?.onResume()
+    }
+
+    fun onPause() {
+        mPanoramaWidget?.onPause()
+    }
+
+    fun onDestroy() {
+        mPanoramaWidget?.onDestroy()
+    }
 }

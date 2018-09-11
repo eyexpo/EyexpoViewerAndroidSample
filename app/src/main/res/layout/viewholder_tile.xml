@@ -1,40 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="270dp"
-    android:layout_gravity="center_horizontal"
-    android:background="#FFFFFF"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    card_view:cardCornerRadius="4dp">
 
-    <Space
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="20px" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:layout_gravity="center_horizontal">
-
-        <com.google.vr.sdk.widgets.pano.VrPanoramaView
-            android:id="@+id/panorama"
+        <com.eyexpo.vr.PanoramaWidget
+            android:id="@+id/panoWidget"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:scrollbars="@null" />
+            android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|left"
-            android:layout_margin="10dp" />
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
 
-    </FrameLayout>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:singleLine="true"
+                android:text="星聚会KTV（合生汇店）"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/rating_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:adjustViewBounds="true"
+                android:maxHeight="16dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/rating" />
+
+            <TextView
+                android:id="@+id/costLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="10dp"
+                android:singleLine="true"
+                android:text="¥95/人 五角场/大学区" />
+
+            <View style="@style/dividerHorizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/reservation_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/reservation" />
+
+                <TextView
+                    android:id="@+id/reservation_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/reservation_text"
+                    android:layout_marginLeft="5dp"
+                    android:singleLine="true"
+                    android:text="小包4小时132元，中包4小时152元" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginBottom="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/group_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/group" />
+
+                <TextView
+                    android:id="@+id/group_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="5dp"
+                    android:singleLine="true"
+                    android:text="59元 周一至周日全时间段欢唱卷+茶水套餐" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="20px" />
-</LinearLayout>
+</android.support.v7.widget.CardView>
